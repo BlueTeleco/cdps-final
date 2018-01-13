@@ -1,58 +1,42 @@
 #!/bin/bash
+. tools.sh
 
 servs=(1 2 3)
 
-sudo lxc-attach --clear-env -n nas1 -- bash -c "
-    echo '*********************************************************************************';
-    echo Configure nas servers;
-    echo '*********************************************************************************';
-    echo ;
-
+send nas1 "
     sudo apt-get install glusterfs-{common,server,client} > /dev/null && echo Glusterfs installed;
+"
 
-    echo ;
-    echo -----------------------------------------------;
-    echo Probing peers;
-    echo -----------------------------------------------;
-    echo ;
+section "Probing peers"
+send nas1 "
     gluster peer probe 10.1.4.2${servs[0]};
     gluster peer probe 10.1.4.2${servs[1]};
     gluster peer probe 10.1.4.2${servs[2]};
+"
 
-    echo ;
-    echo -----------------------------------------------;
-    echo Status os peers;
-    echo -----------------------------------------------;
-    echo ;
+section "Status of peers"
+send nas1 "
     gluster peer status;
+"
 
-    echo ;
-    echo -----------------------------------------------;
-    echo Create and start volume;
-    echo -----------------------------------------------;
-    echo ;
+section "Create and start volume"
+send nas1 "
     gluster volume create nas replica 3 10.1.4.2${servs[0]}:/nas 10.1.4.2${servs[1]}:/nas 10.1.4.2${servs[2]}:/nas force;
     gluster volume start nas;
     gluster volume set nas network.ping-timeout 5;
+"
 
-    echo ;
-    echo -----------------------------------------------;
-    echo Volume info;
-    echo -----------------------------------------------;
-    echo ;
+section "Volume info"
+send nas1 "
     gluster volume info;
 "
 
+section "Mounting glusterfs in CRM servers"
 for item in ${servs[*]}
 do
-sudo lxc-attach --clear-env -n s$item -- bash -c "
-    echo -----------------------------------------------;
-    echo Mounting glusterfs in CRM servers
-    echo -----------------------------------------------;
-    echo ;
-    echo Mount nas servers in s$item...;    
-    mkdir /mnt/nas;
-    mount -t glusterfs 10.1.4.21:/nas /mnt/nas && echo Done;
-    echo ;
-"
+    send s$item "
+         mkdir /mnt/nas;
+         mount -t glusterfs 10.1.4.21:/nas /mnt/nas && echo Done;
+         echo ;
+    "
 done
