@@ -17,8 +17,8 @@ elif [ "$1" == "create" ]; then
 	sudo vnx -f ../pfinal/pfinal.xml --create > /dev/null && echo All machines are up and running
 	echo 
 
-	title 'Configuring firewall'
-	firewall.sh
+	#title 'Configuring firewall'
+	#firewall.sh
 
 	# title 'Configuring load balancer'
 	# lb.sh
@@ -28,6 +28,9 @@ elif [ "$1" == "create" ]; then
 
 	title 'Configurig NAS servers'
 	glusterfs.sh
+
+	title 'Configuring CRM servers'
+	crmservers.sh
 
 elif [ "$1" == "destroy" ]; then
 	title 'Destroying network and containers.'
