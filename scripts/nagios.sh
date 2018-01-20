@@ -25,15 +25,15 @@ section "Getting config files for servers"
 for n in ${servs[*]}
 do
 	send nagios "
-		wget https://raw.githubusercontent.com/..../....../s$n_nagios2.cfg -P /etc/nagios3/conf.d
+		wget https:// https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/Nagios/s$n_nagios.cfg -P /etc/nagios3/conf.d 
 	"
 done
 
-# Modificamos uno que se encuentre en github FALTA SUBIRLO A GITHUB Y DESDE LA CARPETA QUE SE ENCUENTRE ANADIRLO ---ESTE APARTADO REPASAR---
+# Modificamos hostgroups
 send nagios "
-	rm -rf /etc/nagios3/conf.d/hostgroups_nagios2.cfg;
-	wget https://raw.githubusercontent.com/________________________ -P /etc/nagios3/conf.d/hosts.cfg
-	wget https://raw.githubusercontent.com/________________________ -P /etc/nagios3/conf.d
+	lxc-attach -n nagios -- rm -rf /etc/nagios3/conf.d/hostgroups.cfg
+    lxc-attach -n nagios -- wget https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/Nagios/hostgroups.cfg -P /etc/nagios3/conf.d/hosts.cfg
+
 "
 
 # Reinicio
