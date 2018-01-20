@@ -21,8 +21,11 @@ elif [ "$1" == "create" ]; then
 	title 'Configuring firewall'
 	firewall.sh
 
-	title 'Configuring load balancer'
-	lb.sh
+	# title 'Configuring load balancer'
+	# lb.sh
+
+	title "Configuring postgresql database"
+	bbdd.sh
 
 	title 'Configurig NAS servers'
 	glusterfs.sh
