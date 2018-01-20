@@ -21,6 +21,9 @@ elif [ "$1" == "create" ]; then
 	title 'Configuring firewall'
 	firewall.sh
 
+	title 'Configuring load balancer'
+	lb.sh
+
 	title 'Configurig NAS servers'
 	glusterfs.sh
 
@@ -51,4 +54,7 @@ elif [ "$1" == "help" ]; then
 	echo "	- shutdown"
 	echo "	- help"
 	echo
+
+else
+	echo Wrong arguments. Check help for more information
 fi

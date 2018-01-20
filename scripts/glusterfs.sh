@@ -15,11 +15,12 @@ send nas1 "
 "
 
 section "Probing peers"
-send nas1 "
-	gluster peer probe nas${servs[0]};
-	gluster peer probe nas${servs[1]};
-	gluster peer probe nas${servs[2]};
-"
+for n in ${servs[*]}
+do
+	send nas1 "
+		gluster peer probe nas$n;
+	"
+done
 
 section "Status of peers"
 send nas1 "
@@ -27,8 +28,13 @@ send nas1 "
 "
 
 section "Create and start volume"
+nas=""
+for n in ${servs[*]}
+do
+	nas="$nas nas$n:/nas"
+done
 send nas1 "
-	gluster volume create nas replica 3 nas${servs[0]}:/nas nas${servs[1]}:/nas nas${servs[2]}:/nas force;
+	gluster volume create nas replica ${#servs[*]} $nas force;
 	gluster volume start nas;
 	gluster volume set nas network.ping-timeout 5;
 "
@@ -39,11 +45,11 @@ send nas1 "
 "
 
 section "Mounting glusterfs in CRM servers"
-for item in ${servs[*]}
+for n in ${servs[*]}
 do
-	send s$item "
+	send s$n "
 		 mkdir /mnt/nas;
-		 mount -t glusterfs nas1:/nas /mnt/nas && echo Done;
+		 mount -t glusterfs nas1:/nas /mnt/nas && echo s$n done;
 		 echo ;
 	"
 done
