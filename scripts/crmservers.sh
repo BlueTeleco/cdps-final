@@ -39,8 +39,6 @@ done
 section "Configuring storage (NAS and DB)"
 for item in ${servs[*]}
 do
-	echo "	$item";
-	echo "------------------";
 	send $item "
 		cd /root/CRM_2017;
 		mkdir public 2> /dev/null;
@@ -65,3 +63,4 @@ do
 		./node_modules/forever/bin/forever start ./bin/www
 	"
 done
+echo

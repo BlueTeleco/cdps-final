@@ -17,5 +17,5 @@ do
 done
 
 send lb "
-	xr --verbose --server tcp:0:80 $back --web-interface 0:8001
+	xr --verbose --server tcp:0:80 $back --web-interface 0:8001;
 "
