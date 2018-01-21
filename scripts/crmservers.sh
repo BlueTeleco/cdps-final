@@ -30,7 +30,7 @@ do
 		echo Getting CRM...;
 		git clone https://github.com/CORE-UPM/CRM_2017.git &> /dev/null && echo CRM downloaded;
 		cd CRM_2017;
-	    export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
+		export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
 		npm install;
 		npm install forever &> /dev/null;
 		echo ;
@@ -42,7 +42,7 @@ do
 	send $item "
 		cd /root/CRM_2017;
 		mkdir public 2> /dev/null;
-		ln -s /mnt/nas public/upload;
+		ln -s /mnt/nas public/uploads;
 	"
 done
 
@@ -62,6 +62,7 @@ do
 	echo "------------------";
 	send $item "
 		cd /root/CRM_2017;
+		export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
 		./node_modules/forever/bin/forever start ./bin/www
 	"
 done
