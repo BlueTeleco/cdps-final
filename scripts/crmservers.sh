@@ -50,8 +50,8 @@ section "Migrating and seeding database"
 send s1 "
 	cd /root/CRM_2017;
 	export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
-	npm run-script migrate_local && echo Succesfully migrated database;
-	npm run-script seed_local && echo Succesfully seeded database;
+	npm run-script migrate_local > /dev/null && echo Succesfully migrated database;
+	npm run-script seed_local > /dev/null && echo Succesfully seeded database;
 "
 
 section "Starting servers"

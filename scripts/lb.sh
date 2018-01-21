@@ -15,4 +15,5 @@ do
 done
 
 xterm -hold -e "sudo lxc-attach --clear-env -n lb -- xr --verbose --server tcp:0:80 -dr $back --web-interface 0:8001" &
+echo 'Load balancer up and running'
 echo
