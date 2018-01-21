@@ -23,7 +23,7 @@ do
 		cd /root;
 		echo Getting nodejs...;
 		curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &> /dev/null && echo System updated and repository installed || echo Error installing node repository; 
-		sudo apt-get -y install nodejs &> /dev/null && echo -n Installed Node;
+		sudo apt-get -y install nodejs &> /dev/null && echo -n Installed Node-;
 		nodejs --version;
 		echo ;
 
@@ -56,6 +56,9 @@ send s1 "
 section "Starting servers"
 for item in ${servs[*]}
 do
+	echo ;
+	echo "	$item";
+	echo "------------------";
 	send $item "
 		cd /root/CRM_2017;
 		./node_modules/forever/bin/forever start ./bin/www

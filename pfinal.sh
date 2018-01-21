@@ -16,6 +16,7 @@ elif [ "$1" == "create" ]; then
 	title 'Creating network and containers.'
 	sudo vnx -f ../pfinal/pfinal.xml --create > /dev/null && echo All machines are up and running
 	echo 
+    sleep 5
 
 	# title 'Configuring load balancer'
 	# lb.sh
