@@ -25,14 +25,14 @@ section "Getting config files for servers"
 for n in ${servs[*]}
 do
 	send nagios "
-		wget https:// https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/Nagios/s$n_nagios.cfg -P /etc/nagios3/conf.d 
+		wget https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/files/s$n_nagios.cfg -P /etc/nagios3/conf.d
 	"
 done
 
 # Modificamos hostgroups
 send nagios "
 	lxc-attach -n nagios -- rm -rf /etc/nagios3/conf.d/hostgroups.cfg
-    lxc-attach -n nagios -- wget https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/Nagios/hostgroups.cfg -P /etc/nagios3/conf.d/hosts.cfg
+    lxc-attach -n nagios -- wget https://raw.githubusercontent.com/BlueTeleco/cdps-final/master/files/hostgroups.cfg -P /etc/nagios3/conf.d/hosts.cfg
 
 "
 
