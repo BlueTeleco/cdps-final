@@ -30,6 +30,7 @@ do
 		echo Getting CRM...;
 		git clone https://github.com/CORE-UPM/CRM_2017.git &> /dev/null && echo CRM downloaded;
 		cd CRM_2017;
+	    export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
 		npm install;
 		npm install forever &> /dev/null;
 		echo ;
@@ -50,7 +51,7 @@ send s1 "
 	cd /root/CRM_2017;
 	export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
 	npm run-script migrate_local && echo Succesfully migrated database;
-	npm run-script seed_local > /dev/null && echo Succesfully seeded database;
+	npm run-script seed_local && echo Succesfully seeded database;
 "
 
 section "Starting servers"

@@ -18,9 +18,6 @@ elif [ "$1" == "create" ]; then
 	echo 
     sleep 5
 
-	# title 'Configuring load balancer'
-	# lb.sh
-
 	title "Configuring postgresql database"
 	bbdd.sh
 
@@ -29,6 +26,9 @@ elif [ "$1" == "create" ]; then
 
 	title 'Configuring CRM servers'
 	crmservers.sh
+
+    title 'Configuring load balancer'
+    lb.sh
 
 	title 'Configuring firewall'
 	firewall.sh

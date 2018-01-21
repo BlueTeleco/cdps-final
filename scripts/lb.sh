@@ -6,16 +6,13 @@
 #
 ############################################################################################################################
 
-. tools.sh
-
 servs=(1 2 3)
 
 back=""
 for n in ${servs[*]}
 do
-	back="$back --backend 10.1.3.1$n:3030"
+	back="$back --backend 10.1.3.1$n:3000"
 done
 
-send lb "
-	xr --verbose --server tcp:0:80 $back --web-interface 0:8001;
-"
+xterm -hold -e "sudo lxc-attach --clear-env -n lb -- xr --verbose --server tcp:0:80 -dr $back --web-interface 0:8001" &
+echo
