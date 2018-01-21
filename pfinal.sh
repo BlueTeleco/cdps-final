@@ -8,27 +8,32 @@
 
 PATH=$(pwd)/scripts:$PATH
 . tools.sh
+args=""
 
-if (( $# != 1 )); then
-	echo Wrong number of arguments. Check help for more information
+if [ $# != 1 ]; then
+	if [ "$2" == "--extra-server" ]; then
+		cp files/pfinal.xml ../pfinal/
+		args="s4"
+	fi
+fi
 
-elif [ "$1" == "create" ]; then
+if  [ "$1" == "create" ]; then
 	title 'Creating network and containers.'
 	sudo vnx -f ../pfinal/pfinal.xml --create > /dev/null && echo All machines are up and running
 	echo 
-    sleep 5
+	sleep 5
 
 	title "Configuring postgresql database"
 	bbdd.sh
 
 	title 'Configurig NAS servers'
-	glusterfs.sh
+	glusterfs.sh $args
 
 	title 'Configuring CRM servers'
-	crmservers.sh
+	crmservers.sh $args
 
-    title 'Configuring load balancer'
-    lb.sh
+	title 'Configuring load balancer'
+	lb.sh $args
 
 	title 'Configuring firewall'
 	firewall.sh

@@ -9,6 +9,11 @@
 . tools.sh
 
 servs=(1 2 3)
+crm=(s1 s2 s3)
+
+if [ "$1" == "s4" ]; then
+	crm+=(s4)
+fi
 
 send nas1 "
 	sudo apt-get install glusterfs-{common,server,client} > /dev/null && echo Glusterfs installed;
@@ -45,11 +50,11 @@ send nas1 "
 "
 
 section "Mounting glusterfs in CRM servers"
-for n in ${servs[*]}
+for n in ${crm[*]}
 do
-	send s$n "
+	send $n "
 		 mkdir /mnt/nas;
-		 mount -t glusterfs nas1:/nas /mnt/nas && echo s$n done;
+		 mount -t glusterfs nas1:/nas /mnt/nas && echo $n done;
 		 echo ;
 	"
 done

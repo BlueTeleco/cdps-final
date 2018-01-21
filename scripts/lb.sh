@@ -8,6 +8,10 @@
 
 servs=(1 2 3)
 
+if [ "$1" == "s4" ]; then
+	servs+=(4)
+fi
+
 back=""
 for n in ${servs[*]}
 do

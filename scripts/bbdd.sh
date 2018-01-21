@@ -27,8 +27,3 @@ send bbdd "
 	systemctl restart postgresql;
 "
 echo
-
-# "DATABASE_URL=postgres://{user}:{password}@{hostname}:{port}/{database-name}"
-#Rellenar campos
-
-

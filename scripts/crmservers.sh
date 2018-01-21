@@ -14,6 +14,10 @@ pass="xxxx"
 dbhost=10.1.4.31
 dbport=5432
 
+if [ "$1" == "s4" ]; then
+	servs+=(s4)
+fi
+
 section "Installing nodejs and CRM"
 for item in ${servs[*]}
 do
