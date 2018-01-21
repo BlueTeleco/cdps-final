@@ -23,7 +23,7 @@ do
 		cd /root;
 		echo Getting nodejs...;
 		curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &> /dev/null && echo System updated and repository installed || echo Error installing node repository; 
-		sudo apt-get -y install nodejs &> /dev/null && echo Node installed;
+		sudo apt-get -y install nodejs &> /dev/null && echo -n Installed Node;
 		nodejs --version;
 		echo ;
 
@@ -36,22 +36,20 @@ do
 	"
 done
 
-section "Configuring storage (NAS and DB)"
 for item in ${servs[*]}
 do
 	send $item "
 		cd /root/CRM_2017;
 		mkdir public 2> /dev/null;
 		ln -s /mnt/nas public/upload;
-		export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
-		echo $DATABASE_URL;
 	"
 done
 
 section "Migrating and seeding database"
 send s1 "
 	cd /root/CRM_2017;
-	npm run-script migrate_local > /dev/null && echo Succesfully migrated database;
+	export DATABASE_URL=postgres://$user:$pass@$dbhost:$dbport/crm;
+	npm run-script migrate_local && echo Succesfully migrated database;
 	npm run-script seed_local > /dev/null && echo Succesfully seeded database;
 "
 
